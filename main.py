@@ -5,7 +5,7 @@
 import pandas as pd
 # Input dummy data
 input_data = {
-    'user_name': ['Jai', 'Princi', 'Gaurav', 'Anuja'],
+    'user_name': ['Jai12', 'Princi45', 'Gaurav6', 'Anuja120'],
     # Data for credit score calculation
     'on_time_payments': [28, 24, 19, 30],
     'total_payments': [30, 26, 22, 30],
@@ -21,12 +21,12 @@ input_data = {
 
     'num_inquiries': [2, 1, 3, 0]
 }
-
+# Make a data frame out of the dummy data
 df = pd.DataFrame(input_data)
 #print(df)
 pd.options.display.max_columns = None
 print(df.head())
-
+# Add more coloumns for calculating credit score
 df["payment_history"] = (df["on_time_payments"] / df["total_payments"]) * 100
 df["credit_utilization"] = (df["credit_used"] / df["credit_limit"]) * 100
 df["credit_utilization_score"] = (100 - df["credit_utilization"]).clip(lower=0)
@@ -74,6 +74,7 @@ print(f"Row count: {row_count_result[0]}")
 
 alter_table_sql = """
 ALTER TABLE credit_score_table_output
+ADD COLUMN credit_score INT,
 ADD COLUMN on_time_payments INT,
 ADD COLUMN total_payments INT,
 ADD COLUMN credit_used INT,
@@ -90,7 +91,7 @@ mycursor.execute(alter_table_sql)
 mycursor.execute("SELECT COUNT(*) AS column_count FROM information_schema.COLUMNS WHERE table_name = 'credit_score_table_output';")
 coloumn_count_result=mycursor.fetchone()
 print(f"Column count after altering: {coloumn_count_result[0]}")
-
+# Make a function to add dataframe from Python to mysql database
 def add_df_to_sql(df, mycursor, cnx):
     sql = "INSERT INTO credit_score_table_output (user_name, credit_score, on_time_payments, total_payments, credit_used, credit_limit, oldest_account_years, has_credit_card, has_loan, has_mortgage, num_inquiries) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
     # Loop over DataFrame rows
@@ -102,7 +103,7 @@ def add_df_to_sql(df, mycursor, cnx):
     cnx.commit()
     print(f"{len(df)} record(s) inserted.")
 add_df_to_sql(df, mycursor, cnx)
-
+#Check if the row count after adding data to data base
 mycursor.execute("SELECT COUNT(*) AS row_count FROM credit_score_table_output")
 row_count_result=mycursor.fetchone()
 print(f"Row count after: {row_count_result[0]}")
