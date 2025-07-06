@@ -62,7 +62,7 @@ Create the database and table:
 CREATE DATABASE credit_score;
 
 CREATE TABLE credit_score_table_output (
-    user_name VARCHAR(255),
+    user_name VARCHAR(255)
 );
 ```
 
