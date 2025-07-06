@@ -124,9 +124,8 @@ Row count after: 4
 
 ## Author
 
-**Jörn-Hagen Stoll**\
-IT Consultant & DevOps Engineer\
-Website: [kapatapa.com](https://kapatapa.com)\
+**Dr. Ishita Parui**\
+Website: [ishitaparui.com](https://ishitaparui.com)\
 Location: Freiburg, Germany
 
 ---
